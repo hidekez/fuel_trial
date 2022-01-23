@@ -1,7 +1,5 @@
-FROM nginx
+FROM nginx:latest
+MAINTAINER satoshi.fujiu
 
-ADD nginx.conf /etc/nginx/nginx.conf
-ADD fastcgi.conf /etc/nginx/fastcgi.conf
-ADD server.conf /etc/nginx/conf.d/default.conf
-ADD localhost.key /etc/ssl/private/localhost.key
-ADD localhost.crt /etc/ssl/certs/localhost.crt
+ADD ./server.conf /etc/nginx/conf.d/default.conf
+WORKDIR /var/www

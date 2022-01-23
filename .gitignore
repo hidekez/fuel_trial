@@ -1,5 +1,7 @@
 # Docker MySQLのデータが入るディレクトリ
 mount/
+mysql/
+radis/
 
 # PHPStorm
 .idea

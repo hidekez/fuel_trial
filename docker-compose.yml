@@ -1,65 +1,65 @@
 version: '3'
 services:
-  memcached:
-    image: memcached:1.4
-    ports:
-      - "11212:11211"
-
-  data:
-    image: busybox
-    volumes:
-      - ./mount/mysql_data:/var/lib/mysql
-
-  mysql:
-    image: mysql:5.7
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: mysql_database
-      MYSQL_USER: mysql_user
-      MYSQL_PASSWORD: mysql_pw
-    ports:
-      - "13306:3306"
-    volumes_from:
-      - data
-    volumes:
-      - ./docker/mysql/seeders/initial.sql:/docker-entrypoint-initdb.d/initial.sql
-    networks:
-      - myfuel
-    healthcheck:
-      test: ["CMD", "${MYSQL_USER}", "ping", "-p${MYSQL_PASSWORD}"]
-      retries: 3
-      timeout: 5s
-
-  nginx:
-    build: ./docker/nginx
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - .:/var/www/html
-    links:
-      - web
-    networks:
-      - myfuel
-
-  web:
-    # build: ./docker/php-fpm/5.6    # <- if you want to use PHP5.6
-    build: ./docker/php-fpm/7.0
-    # build: ./docker/php-fpm/7.1
-    # build: ./docker/php-fpm/7.2
-    # build: ./docker/php-fpm/7.3
-    volumes:
-      - ./:/var/www/html
-    links:
-      - mysql
-    environment:
-      DATABASE_HOST: 'mysql'
-      DATABASE_NAME: 'mysql_database'
-      DATABASE_USER: 'mysql_user'
-      DATABASE_PASSWORD: 'mysql_pw'
-    networks:
-      - myfuel
-
+    web:
+        container_name: fuel_web
+        build:
+            context: ./docker/nginx/
+        volumes:
+            - ./www:/var/www
+        ports:
+            - "9080:80"
+        links:
+            - app
+    api:
+        container_name: fuel_api
+        build:
+            context: ./docker/nginx/
+        volumes:
+            - ./www:/var/www
+        ports:
+            - "10443:10443"
+        links:
+            - app
+        networks:
+            - myfuel
+    app:
+        container_name: fuel_app
+        build: 
+            context: ./docker/php/
+        volumes:
+            - ./www:/var/www
+            - ./mount/mysqld:/var/run/mysqld
+        links:
+            - mysql
+            - redis
+        networks:
+            - myfuel
+    mysql:
+        container_name: fuel_mysql
+        restart: always
+        image: mysql:5.7 #latest
+        volumes:
+            - ./mount/db/mysql:/var/lib/mysql
+            - ./mount/db/mysqld:/var/run/mysqld
+#            - ./docker/mysql/seeders/initial.sql:/docker-entrypoint-initdb.d/initial.sql
+        environment:
+            - "MYSQL_DATABASE=myfuel"
+            - "MYSQL_ROOT_PASSWORD=myfuel"
+        ports:
+            - "13306:3306"
+        networks:
+            - myfuel
+    redis:
+        container_name: fuel_redis
+        restart: always
+        image: redis:latest
+        volumes:
+            - ./redis:/data
+        ports:
+            - "16379:6379"
+        command: redis-server --appendonly yes
+        networks:
+            - myfuel
 networks:
     myfuel:
         driver: bridge
