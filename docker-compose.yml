@@ -1,66 +1,45 @@
 version: '3'
 services:
     web:
-        container_name: fuel_web
-        build:
-            context: ./docker/nginx/
-        volumes:
-            - ./www:/var/www
+        container_name: web
+        image: nginx:latest
         ports:
-            - "9080:80"
-        links:
-            - app
-    api:
-        container_name: fuel_api
-        build:
-            context: ./docker/nginx/
+            - "8000:80" #local:8000 -> container:80
+        depends_on:
+            - app # appを先に起動
         volumes:
+            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
             - ./www:/var/www
-        ports:
-            - "10443:10443"
-        links:
-            - app
-        networks:
-            - myfuel
     app:
-        container_name: fuel_app
+        container_name: app
         build: 
             context: ./docker/php/
         volumes:
             - ./www:/var/www
-            - ./mount/mysqld:/var/run/mysqld
-        links:
-            - mysql
-            - redis
-        networks:
-            - myfuel
+        depends_on:
+            - mysql # mysqlを先に起動
     mysql:
-        container_name: fuel_mysql
-        restart: always
-        image: mysql:5.7 #latest
+        container_name: mysql
+        image: mysql:5.7
         volumes:
             - ./mount/db/mysql:/var/lib/mysql
             - ./mount/db/mysqld:/var/run/mysqld
-#            - ./docker/mysql/seeders/initial.sql:/docker-entrypoint-initdb.d/initial.sql
+            - ./docker/mysql/seeders/initial.sql:/docker-entrypoint-initdb.d/initial.sql
         environment:
-            - "MYSQL_DATABASE=myfuel"
-            - "MYSQL_ROOT_PASSWORD=myfuel"
+            MYSQL_DATABASE: myfuel
+            MYSQL_ROOT_PASSWORD: myfuel
+            MYSQL_USER: myfuel
+            MYSQL_PASSWORD: myfuel
         ports:
-            - "13306:3306"
-        networks:
-            - myfuel
-    redis:
-        container_name: fuel_redis
+            - "3306:3306"
         restart: always
-        image: redis:latest
-        volumes:
-            - ./redis:/data
-        ports:
-            - "16379:6379"
-        command: redis-server --appendonly yes
-        networks:
-            - myfuel
-networks:
-    myfuel:
-        driver: bridge
+#    redis:
+#        container_name: fuel_redis
+#        restart: always
+#        image: redis:latest
+#        volumes:
+#            - ./mount/redis:/data
+#        ports:
+#            - "16379:6379"
+#        command: redis-server --appendonly yes
 
