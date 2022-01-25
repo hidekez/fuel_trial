@@ -15,7 +15,7 @@
  *  Configure PHP Settings
  * -----------------------------------------------------------------------------
  */
-
+echo "hoge"."<br>";
 /**
  * -----------------------------------------------------------------------------
  *  Show error reporting
@@ -29,7 +29,7 @@
 error_reporting(-1);
 
 ini_set('display_errors', 1);
-
+echo "step:".__FILE__."-".__LINE__."<br>";
 /**
  * -----------------------------------------------------------------------------
  *  Define constants
@@ -93,7 +93,7 @@ if ( ! file_exists(COREPATH.'classes'.DIRECTORY_SEPARATOR.'autoloader.php'))
 {
 	die('No composer autoloader found. Please run composer to install the FuelPHP framework dependencies first!');
 }
-
+echo "step:".__FILE__."-".__LINE__."<br>";
 /**
  * -----------------------------------------------------------------------------
  *  Activate autoloader class
@@ -112,7 +112,7 @@ class_alias('Fuel\\Core\\Autoloader', 'Autoloader');
  *  Exception route processing closure
  *
  */
-
+echo "step:".__FILE__."-".__LINE__."<br>";
 $routerequest = function($request = null, $e = false)
 {
 	Request::reset_request(true);
@@ -147,7 +147,7 @@ $routerequest = function($request = null, $e = false)
 
 	return $response;
 };
-
+echo "step:".__FILE__."-".__LINE__."<br>";
 /**
  * -----------------------------------------------------------------------------
  *  Starting the Application
@@ -162,32 +162,34 @@ $routerequest = function($request = null, $e = false)
  *  Generate the request, execute it and send the output
  *
  */
-
+echo "APPPATH:".APPPATH."<br>";
 try
 {
+    echo "step:".__FILE__."-".__LINE__."<br>";
 	// Boot the app...
 	require APPPATH.'bootstrap.php';
-
+    echo "step:".__FILE__."-".__LINE__."<br>";
 	// ... and execute the main request
 	$response = $routerequest();
+//    echo "response:".$response."<br>";
 }
 catch (HttpBadRequestException $e)
-{
+{echo "step:".__FILE__."-".__LINE__."<br>";
 	$response = $routerequest('_400_', $e);
 }
 catch (HttpNoAccessException $e)
-{
+{echo "step:".__FILE__."-".__LINE__."<br>";
 	$response = $routerequest('_403_', $e);
 }
 catch (HttpNotFoundException $e)
-{
+{echo "step:".__FILE__."-".__LINE__."<br>";
 	$response = $routerequest('_404_', $e);
 }
 catch (HttpServerErrorException $e)
-{
+{echo "step:".__FILE__."-".__LINE__."<br>";
 	$response = $routerequest('_500_', $e);
 }
-
+echo "step:".__FILE__."-".__LINE__."<br>";
 $response->body((string) $response);
 
 /**
@@ -213,7 +215,7 @@ if (strpos($response->body(), '{exec_time}') !== false or strpos($response->body
 		)
 	);
 }
-
+echo "step:".__FILE__."-".__LINE__."<br>";
 /**
  * -----------------------------------------------------------------------------
  *  Show the web page

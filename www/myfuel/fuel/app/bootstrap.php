@@ -10,16 +10,21 @@
  * @link       https://fuelphp.com
  */
 
+echo "step:".__FILE__."-".__LINE__."<br>";
+
 // Bootstrap the framework - THIS LINE NEEDS TO BE FIRST!
 require COREPATH.'bootstrap.php';
 
+echo "step:".__FILE__."-".__LINE__."<br>";
+
 // Add framework overload classes here
-\Autoloader::add_classes(array(
+Autoloader::add_classes(array(
 	// Example: 'View' => APPPATH.'classes/myview.php',
 ));
+echo "step:".__FILE__."-".__LINE__."<br>";
 
 // Register the autoloader
-\Autoloader::register();
+Autoloader::register();
 
 /**
  * Your environment.  Can be set to any of the following:
@@ -30,6 +35,9 @@ require COREPATH.'bootstrap.php';
  * Fuel::PRODUCTION
  */
 Fuel::$env = Arr::get($_SERVER, 'FUEL_ENV', Arr::get($_ENV, 'FUEL_ENV', getenv('FUEL_ENV') ?: Fuel::DEVELOPMENT));
-
+echo "step:".__FILE__."-".__LINE__."<br>";
+echo "APPPATH:".APPPATH."<br>";
 // Initialize the framework with the config file.
-\Fuel::init('config.php');
+Fuel::init('config.php');
+
+echo "step:".__FILE__."-".__LINE__."<br>";

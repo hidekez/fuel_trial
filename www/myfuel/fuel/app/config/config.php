@@ -9,6 +9,7 @@
  * @copyright  2010 - 2019 Fuel Development Team
  * @link       https://fuelphp.com
  */
+echo "step:".__FILE__."-".__LINE__."<br>";
 
 return array(
 	/**
@@ -142,19 +143,19 @@ return array(
 	 *  The default language.
 	 */
 
-	// 'language' => 'en',
+	 'language' => 'ja',
 
 	/**
 	 *  Fallback language when file isn't available for default language.
 	 */
 
-	// 'language_fallback' => 'en',
+	 'language_fallback' => 'en',
 
 	/**
 	 *  PHP set_locale() setting. Use null to not set.
 	 */
 
-	// 'locale' => 'en_US',
+	 'locale' => NULL,//'ja_JP.UTF-8',
 
 	/**
 	 * -------------------------------------------------------------------------
@@ -162,7 +163,7 @@ return array(
 	 * -------------------------------------------------------------------------
 	 */
 
-	// 'encoding' => 'UTF-8',
+	 'encoding' => 'UTF-8',
 
 	/**
 	 * -------------------------------------------------------------------------
@@ -180,7 +181,7 @@ return array(
 	 *  Change the server's default timezone. This is optional.
 	 */
 
-	// 'default_timezone' => null,
+	 'default_timezone' => 'Asia/Tokyo',
 
 	/**
 	 * -------------------------------------------------------------------------
@@ -198,9 +199,9 @@ return array(
 	 *
 	 */
 
-	// 'log_threshold'   => Fuel::L_WARNING,
-	// 'log_path'        => APPPATH.'logs/',
-	// 'log_date_format' => 'Y-m-d H:i:s',
+	 'log_threshold'   => Fuel::L_WARNING,
+	 'log_path'        => APPPATH.'logs/',
+	 'log_date_format' => 'Y-m-d H:i:s',
 
 	/**
 	 * -------------------------------------------------------------------------
