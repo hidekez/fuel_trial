@@ -9,7 +9,6 @@
  * @copyright  2010 - 2019 Fuel Development Team
  * @link       https://fuelphp.com
  */
-echo "step:".__FILE__."-".__LINE__."<br>";
 
 return array(
 	/**
@@ -199,7 +198,7 @@ return array(
 	 *
 	 */
 
-	 'log_threshold'   => Fuel::L_WARNING,
+	 'log_threshold'   => Fuel::L_DEBUG,//Fuel::L_WARNING,
 	 'log_path'        => APPPATH.'logs/',
 	 'log_date_format' => 'Y-m-d H:i:s',
 

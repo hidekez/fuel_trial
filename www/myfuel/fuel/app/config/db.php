@@ -40,21 +40,21 @@ return array(
 		'profiling'      => false,
 	),
 
-	// PDO ドライバで PostgreSQL を使う設定
-	'production' => array(
-		'type'           => 'pdo',
-		'connection'     => array(
-			'dsn'            => 'pgsql:host=localhost;dbname=fuel_db',
-			'username'       => 'your_username',
-			'password'       => 'y0uR_p@ssW0rd',
-			'persistent'     => false,
-			'compress'       => false,
-		),
-		'identifier'   => '"',
-		'table_prefix'   => '',
-		'charset'        => 'utf8',
-		'enable_cache'   => true,
-		'profiling'      => false,
-	),
+//	// PDO ドライバで PostgreSQL を使う設定
+//	'production' => array(
+//		'type'           => 'pdo',
+//		'connection'     => array(
+//			'dsn'            => 'pgsql:host=localhost;dbname=fuel_db',
+//			'username'       => 'your_username',
+//			'password'       => 'y0uR_p@ssW0rd',
+//			'persistent'     => false,
+//			'compress'       => false,
+//		),
+//		'identifier'   => '"',
+//		'table_prefix'   => '',
+//		'charset'        => 'utf8',
+//		'enable_cache'   => true,
+//		'profiling'      => false,
+//	),
 );
 
