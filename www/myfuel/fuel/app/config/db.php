@@ -20,25 +20,26 @@
  *
  */
 
-return array(
-	// MySQL ドライバの設定
-	'development' => array(
-		'type'           => 'mysqli',
-		'connection'     => array(
-			'hostname'       => 'localhost',
-			'port'           => '3306',
-			'database'       => 'myfuel',//'fuel_db',
-			'username'       => 'myfuel',//'your_username',
-			'password'       => 'myfuel',//'y0uR_p@ssW0rd',
-			'persistent'     => false,
-			'compress'       => false,
-		),
-		'identifier'   => '`',
-		'table_prefix'   => '',
-		'charset'        => 'utf8mb4',
-		'enable_cache'   => true,
-		'profiling'      => false,
-	),
+return [
+//    // MySQL ドライバの設定
+//    //    'development' => array(
+//    'default' => [
+//        'type'         => 'mysqli',
+//        'connection'   => [
+//            'hostname'   => 'mysql',
+//            'port'       => '3306',
+//            'database'   => 'myfuel',//'fuel_db',
+//            'username'   => 'admin',//'your_username',
+//            'password'   => 'admin',//'y0uR_p@ssW0rd',
+////            'persistent' => false,
+////            'compress'   => false,
+//        ],
+////        'identifier'   => '`',
+////        'table_prefix' => '',
+////        'charset'      => 'utf8mb4',
+////        'enable_cache' => true,
+////        'profiling'    => false,
+//    ],
 
 //	// PDO ドライバで PostgreSQL を使う設定
 //	'production' => array(
@@ -56,5 +57,22 @@ return array(
 //		'enable_cache'   => true,
 //		'profiling'      => false,
 //	),
-);
+
+    // PDO ドライバで MySQL を使う設定
+    'default' => [
+        'type'         => 'pdo',
+        'connection'   => [
+            'dsn'        => 'mysql:host=mysql;dbname=myfuel',
+            'username'   => 'admin',
+            'password'   => 'admin',
+            'persistent' => false,
+            'compress'   => false,
+        ],
+        'identifier'   => '"',
+        'table_prefix' => '',
+        'charset'      => 'utf8mb4',
+        'enable_cache' => true,
+        'profiling'    => false,
+    ],
+];
 

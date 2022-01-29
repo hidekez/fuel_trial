@@ -18,6 +18,7 @@ services:
             context: ./docker/php/
         volumes:
             - ./www:/var/www
+            - ./mount/db/mysqld:/var/run/mysqld
         depends_on:
             - mysql # mysqlを先に起動
     mysql:
@@ -29,12 +30,17 @@ services:
             - ./docker/mysql/seeders/initial.sql:/docker-entrypoint-initdb.d/initial.sql
         environment:
             MYSQL_DATABASE: myfuel
-            MYSQL_ROOT_PASSWORD: myfuel
-            MYSQL_USER: myfuel
-            MYSQL_PASSWORD: myfuel
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: admin
+            MYSQL_ROOT_PASSWORD: pass
         ports:
             - "3306:3306"
-        restart: always
+        command:
+            mysqld 
+                --character-set-server=utf8mb4 
+                --collation-server=utf8mb4_unicode_ci
+                --skip-character-set-client-handshake
+#        restart: always
 #    redis:
 #        container_name: fuel_redis
 #        restart: always

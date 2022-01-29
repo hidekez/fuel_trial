@@ -10,6 +10,10 @@
  * @link       https://fuelphp.com
  */
 
+use Fuel\Core\Controller;
+use Fuel\Core\DB;
+use Fuel\Core\View;
+
 /**
  * The Welcome Controller.
  *
@@ -41,8 +45,23 @@ class Controller_Welcome extends Controller
 	 */
 	public function action_hello()
 	{
-		return Response::forge(Presenter::forge('welcome/hello'));
+        $query = DB::query('SELECT * FROM users WHERE id = 1');
+        $fetched = $query->execute();
+        Log::debug(__METHOD__." ".__LINE__." fetched:".print_r($fetched,1));// kez
+        var_dump($fetched);
+
+//        var_dump(phpinfo());
+
+//        $this->check_db_connection();
+
+//        if (\Fuel\Core\DBUtil::table_exists('users')){
+//            \Fuel\Core\Log::debug('users exists.');
+//        }
+
+        return Response::forge(Presenter::forge('welcome/hello'));
 	}
+
+
 
 	/**
 	 * The 404 action for the application.
@@ -54,4 +73,22 @@ class Controller_Welcome extends Controller
 	{
 		return Response::forge(Presenter::forge('welcome/404'), 404);
 	}
+
+
+    private function check_db_connection() {
+        try {
+            // host=XXXの部分のXXXにはmysqlのサービス名を指定します
+            $dsn = 'mysql:host=mysql;dbname=myfuel;';
+            $db = new PDO($dsn, 'admin', 'admin');
+
+            $sql = 'SELECT version();';
+            $stmt = $db->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            var_dump($result);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            exit;
+        }
+    }
 }
