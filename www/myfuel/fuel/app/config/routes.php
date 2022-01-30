@@ -19,19 +19,18 @@ return [
 
     // Example for Presenter
     // A route for showing page using Presenter
-//    'hello(/:name)?' => ['welcome/hello', 'name' => 'hello'],
+    'hello(/:name)?' => ['welcome/hello', 'name' => 'hello'],
 
-    'posts'        => 'posts/index',
-    'posts/create' => 'posts/create',
-    'posts/read'   => 'posts/read',
-    'posts/update' => 'posts/update',
-    'posts/delete' => 'posts/delete',
+    'posts'               => 'posts/index',
+    'posts/(:num)'        => 'posts/view/$1',
+    'posts/add'           => 'posts/add',
+    'posts/edit/(:num)'   => 'posts/edit/$1',
+    'posts/delete/(:num)' => 'posts/delete/$1',
 
-    'api/posts'        => 'api/posts/index',
-    'api/posts/create' => 'api/posts/create',
-    'api/posts/read'   => 'api/posts/read',
-    'api/posts/update' => 'api/posts/update',
-    'api/posts/delete' => 'api/posts/delete',
+    'api/posts'             => 'api/posts/index',
+    'api/posts/view'        => 'api/posts/view/$1',
+    'api/posts/add'         => 'api/posts/add',
+    'api/posts/edit/(:num)' => 'api/posts/edit/$1',
 
     // Page
     'articles'               => 'articles/index',
@@ -41,11 +40,9 @@ return [
     'articles/delete/(:num)' => 'articles/delete/$1',
 
     // API
-    'api/articles'               => 'api/articles/index',
-    'api/articles/(:num)'        => 'api/articles/view/$1',
-    'api/articles/create'        => 'api/articles/create',
-    'api/articles/edit/(:num)'   => 'api/articles/edit/$1',
-    'api/articles/delete/(:num)' => 'api/articles/delete/$1',
+    'api/articles'             => 'api/articles/index',
+    'api/articles/(:num)'      => 'api/articles/view/$1',
+    'api/articles/add'         => 'api/articles/add',
+    'api/articles/edit/(:num)' => 'api/articles/edit/$1',
 
-
-];
+    ];

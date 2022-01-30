@@ -23,15 +23,15 @@ class Model_Post extends Model_Soft
         ],
         "deleted_at" => [
             "label"     => "Deleted at",
-            "data_type" => "int",
+            "data_type" => "timestamp",
         ],
         "created_at" => [
             "label"     => "Created at",
-            "data_type" => "int",
+            "data_type" => "timestamp",
         ],
         "updated_at" => [
             "label"     => "Updated at",
-            "data_type" => "int",
+            "data_type" => "timestamp",
         ],
     ];
 
@@ -42,14 +42,15 @@ class Model_Post extends Model_Soft
             'mysql_timestamp' => true,
         ],
         'Orm\Observer_UpdatedAt' => [
-            'events'          => ['before_update'],
-            'property'        => 'updated_at',
+//            'events'          => ['before_update'],
+            'events'          => ['before_save'],
+//            'property'        => 'updated_at',
             'mysql_timestamp' => true,
         ],
     ];
 
     protected static $_soft_delete = [
-        'mysql_timestamp' => false,
+        'mysql_timestamp' => true,
         'deleted_field'   => 'deleted_at',
     ];
 
@@ -57,16 +58,22 @@ class Model_Post extends Model_Soft
 
     protected static $_primary_key = ['id'];
 
-    protected static $_has_many = [
-    ];
+    protected static $_has_many = [];
 
-    protected static $_many_many = [
-    ];
+    protected static $_many_many = [];
 
-    protected static $_has_one = [
-    ];
+    protected static $_has_one = [];
 
-    protected static $_belongs_to = [
-    ];
+    protected static $_belongs_to = [];
+
+    public static function validate($factory)
+    {
+        $val = Validation::forge($factory);
+        $val->add_field('title', 'Title', 'required|max_length[50]');
+        $val->add_field('body', 'Body', 'required');
+        $val->add_field('user_id', 'User Id', 'required|valid_string[numeric]');
+
+        return $val;
+    }
 
 }

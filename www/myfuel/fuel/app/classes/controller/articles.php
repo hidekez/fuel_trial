@@ -5,20 +5,18 @@ class Controller_Articles extends Controller_Template
 
     public function action_index()
     {
-        Log::debug(__METHOD__ . " " . __LINE__ . " called.");// kez
         $data['articles'] = Model_Article::find('all');
         $this->template->title = "Articles";
         $this->template->content = View::forge('article/index', $data);
-
     }
 
     public function action_view($id = null)
     {
-        is_null($id) and Response::redirect('article');
+        is_null($id) and Response::redirect('articles');
 
         if (!$data['article'] = Model_Article::find($id)) {
             Session::set_flash('error', 'Could not find article #' . $id);
-            Response::redirect('article');
+            Response::redirect('articles');
         }
 
         $this->template->title = "Article";
@@ -57,11 +55,11 @@ class Controller_Articles extends Controller_Template
 
     public function action_edit($id = null)
     {
-        is_null($id) and Response::redirect('article');
+        is_null($id) and Response::redirect('articles');
 
         if (!$article = Model_Article::find($id)) {
             Session::set_flash('error', 'Could not find article #' . $id);
-            Response::redirect('article');
+            Response::redirect('articles');
         }
 
         $val = Model_Article::validate('edit');
