@@ -6,21 +6,27 @@ use DBUtil;
 
 class Create_articles
 {
-	public function up()
-	{
-		DBUtil::create_table('articles', array(
-			'id' => array('type' => 'int', 'unsigned' => true, 'null' => false, 'auto_increment' => true, 'constraint' => '11'),
-			'title' => array('constraint' => 50, 'null' => false, 'type' => 'varchar'),
-			'body' => array('null' => false, 'type' => 'text'),
-			'user_id' => array('constraint' => '11', 'null' => false, 'type' => 'int'),
-			'created_at' => array('constraint' => '11', 'null' => false, 'type' => 'int'),
-			'updated_at' => array('constraint' => '11', 'null' => false, 'type' => 'int'),
-			'deleted_at' => array('constraint' => '11', 'null' => true, 'type' => 'int', 'unsigned' => true),
-		), array('id'));
-	}
+    public function up()
+    {
+        DBUtil::create_table('articles', [
+            'id'         => [
+                'type'           => 'int',
+                'unsigned'       => true,
+                'null'           => false,
+                'auto_increment' => true,
+                'constraint'     => '11'
+            ],
+            'title'      => ['type' => 'varchar', 'constraint' => 50, 'null' => false],
+            'body'       => ['type' => 'text', 'null' => false],
+            'user_id'    => ['type' => 'int', 'constraint' => '11', 'null' => false],
+            'deleted_at' => ['null' => true, 'type' => 'datetime'],
+            'created_at' => ['null' => false, 'type' => 'datetime'],
+            'updated_at' => ['null' => false, 'type' => 'datetime'],
+        ], ['id']);
+    }
 
-	public function down()
-	{
-		DBUtil::drop_table('articles');
-	}
+    public function down()
+    {
+        DBUtil::drop_table('articles');
+    }
 }

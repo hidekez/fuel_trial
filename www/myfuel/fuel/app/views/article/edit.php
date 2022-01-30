@@ -3,5 +3,5 @@
 
 <?php echo render('article/_form'); ?>
 <p>
-	<?php echo Html::anchor('article/view/'.$article->id, 'View'); ?> |
-	<?php echo Html::anchor('article', 'Back'); ?></p>
+	<?php echo Html::anchor('articles/view/'.$article->id, 'View'); ?> |
+	<?php echo Html::anchor('articles', 'Back'); ?></p>

@@ -4,4 +4,4 @@
 <?php echo render('article/_form'); ?>
 
 
-<p><?php echo Html::anchor('article', 'Back'); ?></p>
+<p><?php echo Html::anchor('articles', 'Back'); ?></p>

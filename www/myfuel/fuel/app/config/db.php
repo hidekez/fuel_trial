@@ -68,7 +68,7 @@ return [
             'persistent' => false,
             'compress'   => false,
         ],
-        'identifier'   => '"',
+        'identifier'   => '`',
         'table_prefix' => '',
         'charset'      => 'utf8mb4',
         'enable_cache' => true,

@@ -10,5 +10,5 @@
 	<strong>User id:</strong>
 	<?php echo $article->user_id; ?></p>
 
-<?php echo Html::anchor('article/edit/'.$article->id, 'Edit'); ?> |
-<?php echo Html::anchor('article', 'Back'); ?>
+<?php echo Html::anchor('articles/edit/'.$article->id, 'Edit'); ?> |
+<?php echo Html::anchor('articles', 'Back'); ?>
