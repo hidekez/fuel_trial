@@ -2,61 +2,55 @@
 
 use Fuel\Core\Controller_Rest;
 
-class Controller_Articles extends Controller_Rest
+class Controller_Api_Articles extends Controller_Rest
 {
+    protected $format = 'json';
 
-    public function action_index()
+    public function get_index()
     {
-        $data['articles'] = Model_Article::find('all');
-        $this->template->title = "Articles";
-        $this->template->content = View::forge('article/index', $data);
-
+        Log::debug(__METHOD__." ".__LINE__."  called.");// kez
+        $fetched = Model_Article::find('all');
+        $this->response($fetched);
     }
 
-    public function action_view($id = null)
+    public function get_view($id = null)
     {
-        is_null($id) and Response::redirect('article');
-
-        if (!$data['article'] = Model_Article::find($id)) {
-            Session::set_flash('error', 'Could not find article #' . $id);
-            Response::redirect('article');
+        if (is_null($id)) {
+            $this->response([], 400);
         }
-
-        $this->template->title = "Article";
-        $this->template->content = View::forge('article/view', $data);
-
+        $fetched = Model_Article::find($id);
+        $this->response($fetched);
     }
 
-    public function action_add()
+    public function post_add()
     {
-        if (Input::method() == 'POST') {
-            $val = Model_Article::validate('add');
+        $request = Input::post('article');
+        Model_Article::forge(['article' => $request])->save();
 
-            if ($val->run()) {
-                $article = Model_Article::forge([
-                    'title'   => Input::post('title'),
-                    'body'    => Input::post('body'),
-                    'user_id' => Input::post('user_id'),
-                ]);
-
-                if ($article and $article->save()) {
-                    Session::set_flash('success', 'Added article #' . $article->id . '.');
-
-                    Response::redirect('article');
-                } else {
-                    Session::set_flash('error', 'Could not save article.');
-                }
-            } else {
-                Session::set_flash('error', $val->error());
-            }
-        }
-
-        $this->template->title = "Articles";
-        $this->template->content = View::forge('article/add');
-
+//        if (Input::method() == 'POST') {
+//            $val = Model_Article::validate('add');
+//
+//            if ($val->run()) {
+//                $article = Model_Article::forge([
+//                    'title'   => Input::post('title'),
+//                    'body'    => Input::post('body'),
+//                    'user_id' => Input::post('user_id'),
+//                ]);
+//
+//                if ($article and $article->save()) {
+//                    Session::set_flash('success', 'Added article #' . $article->id . '.');
+//
+//                    Response::redirect('article');
+//                } else {
+//                    Session::set_flash('error', 'Could not save article.');
+//                }
+//            } else {
+//                Session::set_flash('error', $val->error());
+//            }
+//        }
     }
 
-    public function action_edit($id = null)
+    public function post_edit($id = null)
     {
         is_null($id) and Response::redirect('article');
 
@@ -96,20 +90,19 @@ class Controller_Articles extends Controller_Rest
 
     }
 
-    public function action_delete($id = null)
-    {
-        is_null($id) and Response::redirect('article');
-
-        if ($article = Model_Article::find($id)) {
-            $article->delete();
-
-            Session::set_flash('success', 'Deleted article #' . $id);
-        } else {
-            Session::set_flash('error', 'Could not delete article #' . $id);
-        }
-
-        Response::redirect('article');
-
-    }
+//    public function delete($id = null)
+//    {
+//        is_null($id) and Response::redirect('article');
+//
+//        if ($article = Model_Article::find($id)) {
+//            $article->delete();
+//
+//            Session::set_flash('success', 'Deleted article #' . $id);
+//        } else {
+//            Session::set_flash('error', 'Could not delete article #' . $id);
+//        }
+//
+//        Response::redirect('article');
+//    }
 
 }
